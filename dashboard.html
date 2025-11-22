@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Intelligent College Admission System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: url('image/bg.jpg');
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .sidebar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .status-pending { background-color: #fef3c7; color: #92400e; }
+        .status-verified { background-color: #d1fae5; color: #065f46; }
+        .status-rejected { background-color: #fee2e2; color: #991b1b; }
+        .status-accepted { background-color: #dbeafe; color: #1e40af; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="flex">
+        <!-- Sidebar -->
+        <div class="sidebar w-64 text-white">
+            <div class="p-6">
+                <div class="flex items-center mb-8">
+                    <i class="fas fa-graduation-cap text-2xl mr-3"></i>
+                    <span class="text-xl font-bold">Intelligent College Admission</span>
+                </div>
+                <nav class="space-y-2">
+                    <a href="/dashboard.html" class="flex items-center p-3 rounded-lg bg-white bg-opacity-20">
+                        <i class="fas fa-tachometer-alt mr-3"></i>
+                        Dashboard
+                    </a>
+                    <a href="/apply.html" class="flex items-center p-3 rounded-lg hover:bg-white hover:bg-opacity-20 transition duration-300">
+                        <i class="fas fa-plus-circle mr-3"></i>
+                        New Application
+                    </a>
+                    <a href="/analytics.html" class="flex items-center p-3 rounded-lg hover:bg-white hover:bg-opacity-20 transition duration-300">
+                        <i class="fas fa-chart-bar mr-3"></i>
+                        Analytics
+                    </a>
+                    <a href="/index.html" class="flex items-center p-3 rounded-lg hover:bg-white hover:bg-opacity-20 transition duration-300">
+                        <i class="fas fa-sign-out-alt mr-3"></i>
+                        Logout
+                    </a>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="flex-1 p-8">
+            <!-- Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-800">Welcome</h1>
+                <p class="text-gray-600">Manage your applications and track admission status</p>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid md:grid-cols-4 gap-6 mb-8">
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-blue-100 text-blue-600">
+                            <i class="fas fa-file-alt text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Total Applications</p>
+                            <p class="text-2xl font-bold text-gray-800"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                            <i class="fas fa-clock text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Pending</p>
+                            <p class="text-2xl font-bold text-gray-800">
+                                
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-green-100 text-green-600">
+                            <i class="fas fa-check-circle text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Verified</p>
+                            <p class="text-2xl font-bold text-gray-800">
+                                
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card bg-white p-6 rounded-lg shadow-md">
+                    <div class="flex items-center">
+                        <div class="p-3 rounded-full bg-purple-100 text-purple-600">
+                            <i class="fas fa-trophy text-xl"></i>
+                        </div>
+                        <div class="ml-4">
+                            <p class="text-sm font-medium text-gray-600">Accepted</p>
+                            <p class="text-2xl font-bold text-gray-800">
+                                
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Applications Table -->
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-xl font-bold text-gray-800">Your Applications</h2>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Application ID</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Engineering Stream</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">12th %</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Entrance Score</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                        
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900"></td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full status-{{ application.status }}">
+                                        
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <a href="analytics.html" class="text-indigo-600 hover:text-indigo-900 mr-3">
+                                        <i class="fas fa-eye"></i> View
+                                    </a>
+                                
+                                    <a href="/upload_documents (1).html" class="text-green-600 hover:text-green-900">
+                                        <i class="fas fa-upload"></i> Upload Docs
+                                    </a>
+                                    
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td colspan="7" class="px-6 py-4 text-center text-gray-500">
+                                    <i class="fas fa-inbox text-4xl mb-3"></i>
+                                    <p>No applications found. Start by creating a new application!</p>
+                                    <a href="/apply.html" class="mt-3 inline-block bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">
+                                        <i class="fas fa-plus mr-2"></i>Create Application
+                                    </a>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="mt-8">
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Quick Actions</h3>
+                <div class="grid md:grid-cols-3 gap-4">
+                    <a href="/apply.html" class="bg-indigo-600 text-white p-4 rounded-lg hover:bg-indigo-700 transition duration-300 text-center">
+                        <i class="fas fa-plus-circle text-2xl mb-2"></i>
+                        <p class="font-semibold">New Application</p>
+                    </a>
+                    <a href="/analytics.html" class="bg-green-600 text-white p-4 rounded-lg hover:bg-green-700 transition duration-300 text-center">
+                        <i class="fas fa-chart-line text-2xl mb-2"></i>
+                        <p class="font-semibold">View Analytics</p>
+                    </a>
+                    <a href="#" class="bg-purple-600 text-white p-4 rounded-lg hover:bg-purple-700 transition duration-300 text-center">
+                        <i class="fas fa-download text-2xl mb-2"></i>
+                        <p class="font-semibold">Download Forms</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-refresh dashboard every 30 seconds
+        setInterval(function() {
+            location.reload();
+        }, 30000);
+    </script>
+    <!-- Database and Streams management -->
+    <script src="database.js"></script>
+    <script>
+        // Manage Streams UI
+        async function refreshStreamsList() {
+            const list = document.getElementById('streams-list');
+            if (!list) return;
+            try {
+                const streams = await window.getAllStreams();
+                list.innerHTML = '';
+                if (!streams || streams.length === 0) {
+                    list.innerHTML = '<p class="text-gray-500">No streams defined yet.</p>';
+                    return;
+                }
+                const ul = document.createElement('ul');
+                ul.className = 'space-y-2';
+                streams.forEach(s => {
+                    const li = document.createElement('li');
+                    li.className = 'flex items-center justify-between bg-white p-3 rounded-md shadow-sm';
+                    li.innerHTML = `<div><strong class="text-gray-800">${s.name}</strong> <span class="text-sm text-gray-500">${s.code || ''}</span></div>`;
+                    const btn = document.createElement('button');
+                    btn.className = 'bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600';
+                    btn.textContent = 'Delete';
+                    btn.onclick = async () => {
+                        if (!confirm('Delete stream "' + s.name + '"?')) return;
+                        await window.bsoietDB.deleteStream(s.id);
+                        await refreshStreamsList();
+                    };
+                    li.appendChild(btn);
+                    ul.appendChild(li);
+                });
+                list.appendChild(ul);
+            } catch (err) {
+                console.error('Failed to load streams', err);
+                list.innerHTML = '<p class="text-red-500">Failed to load streams.</p>';
+            }
+        }
+
+        async function addStreamFromUI() {
+            const nameInput = document.getElementById('stream-name');
+            const codeInput = document.getElementById('stream-code');
+            if (!nameInput || !nameInput.value.trim()) {
+                alert('Please enter stream name');
+                return;
+            }
+            const payload = { name: nameInput.value.trim(), code: (codeInput && codeInput.value.trim()) || null };
+            const res = await window.bsoietDB.addStream(payload);
+            if (res && res.success) {
+                nameInput.value = '';
+                if (codeInput) codeInput.value = '';
+                await refreshStreamsList();
+                alert('Stream added');
+            } else {
+                alert('Failed to add stream: ' + (res.error || 'unknown'));
+            }
+        }
+
+        // Expose helper used during initialization
+        window.getAllStreams = async function() { return await window.bsoietDB.getAllStreams(); };
+
+        // Wait for DB initialized then populate
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create a small Manage Streams panel below Quick Actions
+            const quickActions = document.querySelector('.mt-8');
+            if (quickActions) {
+                const panel = document.createElement('div');
+                panel.className = 'mt-6 bg-white p-6 rounded-lg shadow-md';
+                panel.innerHTML = `
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Manage Streams</h3>
+                    <div class="flex gap-3 mb-4">
+                        <input id="stream-name" class="border p-2 rounded-md w-1/2" placeholder="Stream name (e.g., Computer Science)" />
+                        <input id="stream-code" class="border p-2 rounded-md w-1/4" placeholder="Code (optional)" />
+                        <button id="add-stream-btn" class="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700">Add Stream</button>
+                    </div>
+                    <div id="streams-list" class="">
+                        <p class="text-gray-500">Loading streams...</p>
+                    </div>
+                `;
+                quickActions.parentNode.insertBefore(panel, quickActions.nextSibling);
+                document.getElementById('add-stream-btn').addEventListener('click', addStreamFromUI);
+
+                // Poll until DB is ready then load streams
+                const waitForDb = setInterval(async () => {
+                    if (window.bsoietDB && window.bsoietDB.isInitialized) {
+                        clearInterval(waitForDb);
+                        await refreshStreamsList();
+                    }
+                }, 300);
+            }
+        });
+    </script>
+</body>
+</html>

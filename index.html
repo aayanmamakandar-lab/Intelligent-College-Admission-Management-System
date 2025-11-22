@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intelligent College Admission Management System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('image/bg.jpg');
+              /* Fallback gradient if image is unavailable */
+              background: linear-gradient(135deg, #b9c21a 0%, #764ba2 100%);
+              /* Background image on top of the gradient */
+              background-image: url('image/bg.jpg');
+              background-repeat: no-repeat;
+              background-position: center center;
+              background-attachment: fixed;
+              background-size: cover;
+              min-height: 100vh;
+        }
+        .hero-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transition: transform 0.3s ease;
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-graduation-cap text-2xl text-indigo-600 mr-3"></i>
+                    <span class="text-xl font-bold text-gray-800">DR.Bapuji Salunkhe Institute Of Engineering & Technology</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="/login (1).html" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login
+                    </a>
+                    <a href="/register (1).html" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300">
+                        <i class="fas fa-user-plus mr-2"></i>Register
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="hero-section p-12 text-center text-white">
+            <h1 class="text-5xl font-bold mb-6">Intelligent College Admission Document Processing System</h1>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">
+                Revolutionizing college admissions with AI-powered document processing, real-time analytics, 
+                and intelligent student interest tracking for optimal counseling and seat allocation.
+            </p>
+            <div class="flex justify-center space-x-4">
+                <a href="/register (1).html" class="btn-primary text-white px-8 py-3 rounded-lg font-semibold">
+                    <i class="fas fa-rocket mr-2"></i>Get Started
+                </a>
+                <a href="#features" class="bg-white text-indigo-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+                    <i class="fas fa-info-circle mr-2"></i>Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-bold text-center text-white mb-12">System Features</h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- NLP Document Processing -->
+            <div class="feature-card p-6 rounded-lg">
+                <div class="text-center mb-4">
+                    <i class="fas fa-file-alt text-4xl text-indigo-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-800">NLP Document Processing</h3>
+                </div>
+                <p class="text-gray-600 text-center">
+                    Advanced Natural Language Processing automatically extracts and verifies information from admission documents, 
+                    reducing manual effort and improving accuracy.
+                </p>
+            </div>
+
+            <!-- Real-time Analytics -->
+            <div class="feature-card p-6 rounded-lg">
+                <div class="text-center mb-4">
+                    <i class="fas fa-chart-line text-4xl text-green-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Real-time Analytics</h3>
+                </div>
+                <p class="text-gray-600 text-center">
+                    Comprehensive dashboard providing instant insights into application trends, 
+                    student preferences, and admission statistics for data-driven decisions.
+                </p>
+            </div>
+
+            <!-- Student Interest Tracking -->
+            <div class="feature-card p-6 rounded-lg">
+                <div class="text-center mb-4">
+                    <i class="fas fa-brain text-4xl text-purple-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Student Interest Tracking</h3>
+                </div>
+                <p class="text-gray-600 text-center">
+                    Intelligent tracking of student inclinations towards specific engineering streams, 
+                    helping optimize counseling and seat allocation strategies.
+                </p>
+            </div>
+
+            <!-- Automated Merit List -->
+            <div class="feature-card p-6 rounded-lg">
+                <div class="text-center mb-4">
+                    <i class="fas fa-trophy text-4xl text-yellow-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Automated Merit List</h3>
+                </div>
+                <p class="text-gray-600 text-center">
+                    Dynamic merit list generation based on multiple criteria including academic performance, 
+                    entrance scores, and document verification status.
+                </p>
+            </div>
+
+            <!-- Document Verification -->
+            <div class="feature-card p-6 rounded-lg">
+                <div class="text-center mb-4">
+                    <i class="fas fa-shield-alt text-4xl text-red-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Document Verification</h3>
+                </div>
+                <p class="text-gray-600 text-center">
+                    Automated verification of academic documents, certificates, and identity proofs 
+                    with fraud detection capabilities.
+                </p>
+            </div>
+
+            <!-- Mobile Responsive -->
+            <div class="feature-card p-6 rounded-lg">
+                <div class="text-center mb-4">
+                    <i class="fas fa-mobile-alt text-4xl text-blue-600 mb-3"></i>
+                    <h3 class="text-xl font-bold text-gray-800">Mobile Responsive</h3>
+                </div>
+                <p class="text-gray-600 text-center">
+                    Fully responsive design ensuring seamless experience across all devices, 
+                    enabling students to apply and track applications on-the-go.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Architecture -->
+    <div class="container mx-auto px-4 py-16">
+        <div class="bg-white rounded-lg p-8 shadow-lg">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-8">System Architecture</h2>
+            <div class="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                    <img src="https://via.placeholder.com/500x300/e2e8f0/64748b?text=System+Architecture" 
+                         alt="System Architecture" class="w-full rounded-lg shadow-md">
+                </div>
+                <div class="space-y-6">
+                    <div class="flex items-start">
+                        <div class="bg-indigo-600 text-white rounded-full p-2 mr-4 mt-1">
+                            <i class="fas fa-layer-group text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Multi-layer Architecture</h4>
+                            <p class="text-gray-600">Scalable design with presentation, business logic, and data layers.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-green-600 text-white rounded-full p-2 mr-4 mt-1">
+                            <i class="fas fa-database text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">Database Integration</h4>
+                            <p class="text-gray-600">Secure data storage with backup and recovery mechanisms.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="bg-purple-600 text-white rounded-full p-2 mr-4 mt-1">
+                            <i class="fas fa-robot text-sm"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800">AI/ML Integration</h4>
+                            <p class="text-gray-600">Advanced algorithms for document processing and analytics.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Intelligent College Admission Management System. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

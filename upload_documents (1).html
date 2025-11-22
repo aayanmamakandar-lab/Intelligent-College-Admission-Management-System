@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Documents - Intelligent College Admission System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('image/bg1.jpg');
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .upload-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .document-card {
+            border: 2px dashed #d1d5db;
+            transition: all 0.3s ease;
+        }
+        .document-card.dragover {
+            border-color: #667eea;
+            background-color: #f3f4f6;
+        }
+        .document-card.uploaded {
+            border-color: #10b981;
+            background-color: #ecfdf5;
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        .verification-badge {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-2">
+                <i class="fas fa-upload mr-3"></i>Document Upload
+            </h1>
+            <p class="text-xl text-gray-200">Upload and verify your academic documents</p>
+        </div>
+
+        <!-- Upload Container -->
+        <div class="upload-container max-w-6xl mx-auto p-8">
+            <!-- Progress Indicator -->
+            <div class="mb-8">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-sm font-medium text-gray-700">Upload Progress</span>
+                    <span class="text-sm font-medium text-gray-700" id="overall-progress">0/5 Documents</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-gradient-to-r from-indigo-500 to-purple-600 h-3 rounded-full progress-bar" 
+                         id="progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Document Upload Grid -->
+            <form id="documentForm" method="POST" action="/upload_documents/{{ application_id }}" enctype="multipart/form-data">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <!-- 12th Marksheet -->
+                    <div class="document-card rounded-lg p-6 relative" data-document="12th_marksheet">
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-certificate text-4xl text-indigo-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">12th Marksheet</h3>
+                            <p class="text-sm text-gray-600 mb-4">Upload your 12th grade marksheet</p>
+                            
+                            <input type="file" id="file-12th_marksheet" name="documents" accept=".pdf,.jpg,.jpeg,.png" 
+                                   class="hidden" onchange="handleFileSelect(this, '12th_marksheet')">
+                            <input type="hidden" name="document_types" value="marksheet_12th">
+                            
+                            <button type="button" onclick="document.getElementById('file-12th_marksheet').click()" 
+                                    class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition duration-300">
+                                <i class="fas fa-plus mr-2"></i>Choose File
+                            </button>
+                            
+                            <div class="mt-4 text-sm text-gray-500">
+                                <p>Supported: PDF, JPG, PNG (Max 5MB)</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Verification Badge -->
+                        <div class="verification-badge hidden" id="badge-12th_marksheet">
+                            <span class="bg-green-500 text-white rounded-full p-2">
+                                <i class="fas fa-check text-sm"></i>
+                            </span>
+                        </div>
+                        
+                        <!-- File Info -->
+                        <div class="mt-4 hidden" id="info-12th_marksheet">
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <p class="text-sm font-medium text-gray-800" id="filename-12th_marksheet"></p>
+                                <p class="text-xs text-gray-600" id="size-12th_marksheet"></p>
+                                <div class="mt-2">
+                                    <div class="flex justify-between text-xs text-gray-600 mb-1">
+                                        <span>Upload Progress</span>
+                                        <span id="progress-12th_marksheet">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full progress-bar" 
+                                             id="progress-bar-12th_marksheet" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 10th Markshit -->
+                    <div class="document-card rounded-lg p-6 relative" data-document="10th_marksheet">
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-certificate text-4xl text-green-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">10th Marksheet</h3>
+                            <p class="text-sm text-gray-600 mb-4">Upload your 10th grade marksheet</p>
+                            
+                            <input type="file" id="file-10th_marksheet" name="documents" accept=".pdf,.jpg,.jpeg,.png" 
+                                   class="hidden" onchange="handleFileSelect(this, '10th_marksheet')">
+                            <input type="hidden" name="document_types" value="marksheet_10th">
+                            
+                            <button type="button" onclick="document.getElementById('file-10th_marksheet').click()" 
+                                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition duration-300">
+                                <i class="fas fa-plus mr-2"></i>Choose File
+                            </button>
+                            
+                            <div class="mt-4 text-sm text-gray-500">
+                                <p>Supported: PDF, JPG, PNG (Max 5MB)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="verification-badge hidden" id="badge-10th_marksheet">
+                            <span class="bg-green-500 text-white rounded-full p-2">
+                                <i class="fas fa-check text-sm"></i>
+                            </span>
+                        </div>
+                        
+                        <div class="mt-4 hidden" id="info-10th_marksheet">
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <p class="text-sm font-medium text-gray-800" id="filename-10th_marksheet"></p>
+                                <p class="text-xs text-gray-600" id="size-10th_marksheet"></p>
+                                <div class="mt-2">
+                                    <div class="flex justify-between text-xs text-gray-600 mb-1">
+                                        <span>Upload Progress</span>
+                                        <span id="progress-10th_marksheet">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full progress-bar" 
+                                             id="progress-bar-10th_marksheet" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Birth Certificate -->
+                    <div class="document-card rounded-lg p-6 relative" data-document="birth_certificate">
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-baby text-4xl text-purple-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Birth Certificate</h3>
+                            <p class="text-sm text-gray-600 mb-4">Upload your birth certificate</p>
+                            
+                            <input type="file" id="file-birth_certificate" name="documents" accept=".pdf,.jpg,.jpeg,.png" 
+                                   class="hidden" onchange="handleFileSelect(this, 'birth_certificate')">
+                            <input type="hidden" name="document_types" value="birth_certificate">
+                            
+                            <button type="button" onclick="document.getElementById('file-birth_certificate').click()" 
+                                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300">
+                                <i class="fas fa-plus mr-2"></i>Choose File
+                            </button>
+                            
+                            <div class="mt-4 text-sm text-gray-500">
+                                <p>Supported: PDF, JPG, PNG (Max 5MB)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="verification-badge hidden" id="badge-birth_certificate">
+                            <span class="bg-green-500 text-white rounded-full p-2">
+                                <i class="fas fa-check text-sm"></i>
+                            </span>
+                        </div>
+                        
+                        <div class="mt-4 hidden" id="info-birth_certificate">
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <p class="text-sm font-medium text-gray-800" id="filename-birth_certificate"></p>
+                                <p class="text-xs text-gray-600" id="size-birth_certificate"></p>
+                                <div class="mt-2">
+                                    <div class="flex justify-between text-xs text-gray-600 mb-1">
+                                        <span>Upload Progress</span>
+                                        <span id="progress-birth_certificate">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full progress-bar" 
+                                             id="progress-bar-birth_certificate" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Identity Proof -->
+                    <div class="document-card rounded-lg p-6 relative" data-document="identity_proof">
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-id-card text-4xl text-red-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Identity Proof</h3>
+                            <p class="text-sm text-gray-600 mb-4">Upload Aadhar Card, Passport, or Driving License</p>
+                            
+                            <input type="file" id="file-identity_proof" name="documents" accept=".pdf,.jpg,.jpeg,.png" 
+                                   class="hidden" onchange="handleFileSelect(this, 'identity_proof')">
+                            <input type="hidden" name="document_types" value="identity_proof">
+                            
+                            <button type="button" onclick="document.getElementById('file-identity_proof').click()" 
+                                    class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition duration-300">
+                                <i class="fas fa-plus mr-2"></i>Choose File
+                            </button>
+                            
+                            <div class="mt-4 text-sm text-gray-500">
+                                <p>Supported: PDF, JPG, PNG (Max 5MB)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="verification-badge hidden" id="badge-identity_proof">
+                            <span class="bg-green-500 text-white rounded-full p-2">
+                                <i class="fas fa-check text-sm"></i>
+                            </span>
+                        </div>
+                        
+                        <div class="mt-4 hidden" id="info-identity_proof">
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <p class="text-sm font-medium text-gray-800" id="filename-identity_proof"></p>
+                                <p class="text-xs text-gray-600" id="size-identity_proof"></p>
+                                <div class="mt-2">
+                                    <div class="flex justify-between text-xs text-gray-600 mb-1">
+                                        <span>Upload Progress</span>
+                                        <span id="progress-identity_proof">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full progress-bar" 
+                                             id="progress-bar-identity_proof" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Category Certificate (if applicable) -->
+                    <div class="document-card rounded-lg p-6 relative" data-document="category_certificate">
+                        <div class="text-center">
+                            <div class="mb-4">
+                                <i class="fas fa-certificate text-4xl text-yellow-600"></i>
+                            </div>
+                            <h3 class="text-lg font-semibold text-gray-800 mb-2">Category Certificate</h3>
+                            <p class="text-sm text-gray-600 mb-4">SC/ST/OBC certificate (if applicable)</p>
+                            
+                            <input type="file" id="file-category_certificate" name="documents" accept=".pdf,.jpg,.jpeg,.png" 
+                                   class="hidden" onchange="handleFileSelect(this, 'category_certificate')">
+                            <input type="hidden" name="document_types" value="category_certificate">
+                            
+                            <button type="button" onclick="document.getElementById('file-category_certificate').click()" 
+                                    class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700 transition duration-300">
+                                <i class="fas fa-plus mr-2"></i>Choose File
+                            </button>
+                            
+                            <div class="mt-4 text-sm text-gray-500">
+                                <p>Supported: PDF, JPG, PNG (Max 5MB)</p>
+                                <p class="text-xs mt-1">Optional - Upload only if applicable</p>
+                            </div>
+                        </div>
+                        
+                        <div class="verification-badge hidden" id="badge-category_certificate">
+                            <span class="bg-green-500 text-white rounded-full p-2">
+                                <i class="fas fa-check text-sm"></i>
+                            </span>
+                        </div>
+                        
+                        <div class="mt-4 hidden" id="info-category_certificate">
+                            <div class="bg-gray-100 p-3 rounded-lg">
+                                <p class="text-sm font-medium text-gray-800" id="filename-category_certificate"></p>
+                                <p class="text-xs text-gray-600" id="size-category_certificate"></p>
+                                <div class="mt-2">
+                                    <div class="flex justify-between text-xs text-gray-600 mb-1">
+                                        <span>Upload Progress</span>
+                                        <span id="progress-category_certificate">0%</span>
+                                    </div>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full progress-bar" 
+                                             id="progress-bar-category_certificate" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-between items-center mt-8">
+                    <div class="text-sm text-gray-600">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        Documents will be verified automatically using AI
+                    </div>
+                    <div class="space-x-4">
+                        <a href="/dashboard.html" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300">
+                            <i class="fas fa-arrow-left mr-2"></i>Back to Dashboard
+                        </a>
+                    <a href="/analytics.html" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-paper-plane mr-2"></i>Submit Documents
+                      </a>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>ssss
+
+    <!-- Verification Modal -->
+    <div id="verificationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md mx-4">
+            <div class="text-center">
+                <div class="mb-4">
+                    <i class="fas fa-robot text-4xl text-indigo-600"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">AI Document Verification</h3>
+                <p class="text-gray-600 mb-6">Our AI system is analyzing your documents for authenticity and accuracy.</p>
+                
+                <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-sm font-medium text-gray-700">Processing</span>
+                        <span class="text-sm text-gray-600" id="verification-progress">0%</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-indigo-600 h-2 rounded-full progress-bar" 
+                             id="verification-progress-bar" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div id="verification-status" class="hidden">
+                    <div class="flex items-center justify-center mb-4">
+                        <i class="fas fa-check-circle text-3xl text-green-500 mr-2"></i>
+                        <span class="text-lg font-semibold text-green-700">Verification Complete!</span>
+                    </div>
+                    <p class="text-gray-600 mb-4">Your documents have been successfully verified.</p>
+                </div>
+                
+                <button id="closeModal" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 transition duration-300 hidden">
+                    Continue
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let uploadedDocuments = 0;
+        const totalDocuments = 5;
+        let verificationResults = {};
+
+        function handleFileSelect(input, documentType) {
+            const file = input.files[0];
+            if (!file) return;
+
+            // Validate file size (5MB limit)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('File size must be less than 5MB');
+                input.value = '';
+                return;
+            }
+
+            // Show file info
+            document.getElementById(`filename-${documentType}`).textContent = file.name;
+            document.getElementById(`size-${documentType}`).textContent = formatFileSize(file.size);
+            document.getElementById(`info-${documentType}`).classList.remove('hidden');
+
+            // Simulate upload progress
+            simulateUpload(documentType);
+        }
+
+        function simulateUpload(documentType) {
+            const progressBar = document.getElementById(`progress-bar-${documentType}`);
+            const progressText = document.getElementById(`progress-${documentType}`);
+            const card = document.querySelector(`[data-document="${documentType}"]`);
+            
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 15 + 5;
+                if (progress > 100) progress = 100;
+                
+                progressBar.style.width = progress + '%';
+                progressText.textContent = Math.round(progress) + '%';
+                
+                if (progress === 100) {
+                    clearInterval(interval);
+                    card.classList.add('uploaded');
+                    document.getElementById(`badge-${documentType}`).classList.remove('hidden');
+                    
+                    // Start AI verification
+                    startVerification(documentType);
+                }
+            }, 100);
+        }
+
+        function startVerification(documentType) {
+            // Simulate AI verification process
+            setTimeout(() => {
+                verificationResults[documentType] = {
+                    status: 'verified',
+                    confidence: Math.floor(Math.random() * 20) + 80, // 80-99% confidence
+                    issues: []
+                };
+                
+                uploadedDocuments++;
+                updateOverallProgress();
+                checkAllDocumentsUploaded();
+            }, 1000);
+        }
+
+        function updateOverallProgress() {
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('overall-progress');
+            
+            const percentage = (uploadedDocuments / totalDocuments) * 100;
+            progressBar.style.width = percentage + '%';
+            progressText.textContent = `${uploadedDocuments}/${totalDocuments} Documents`;
+        }
+
+        function checkAllDocumentsUploaded() {
+            if (uploadedDocuments >= 3) { // Minimum 3 documents required
+                document.getElementById('submitBtn').disabled = false;
+            }
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        // Form submission
+        document.getElementById('documentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (uploadedDocuments < 3) {
+                alert('Please upload at least 3 required documents: 12th Marksheet, 10th Marksheet, and Identity Proof.');
+                return;
+            }
+            
+            showVerificationModal();
+        });
+
+        function showVerificationModal() {
+            const modal = document.getElementById('verificationModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            
+            // Simulate verification process
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += Math.random() * 10 + 5;
+                if (progress > 100) progress = 100;
+                
+                document.getElementById('verification-progress').textContent = Math.round(progress) + '%';
+                document.getElementById('verification-progress-bar').style.width = progress + '%';
+                
+                if (progress === 100) {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        document.getElementById('verification-status').classList.remove('hidden');
+                        document.getElementById('closeModal').classList.remove('hidden');
+                    }, 500);
+                }
+            }, 200);
+        }
+
+        // Close modal and redirect
+        document.getElementById('closeModal').addEventListener('click', function() {
+            window.location.href = '/dashboard';
+        });
+
+        // Drag and drop functionality
+        document.querySelectorAll('.document-card').forEach(card => {
+            card.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+            
+            card.addEventListener('dragleave', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+            });
+            
+            card.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const documentType = this.dataset.document;
+                    const input = document.getElementById(`file-${documentType}`);
+                    input.files = files;
+                    handleFileSelect(input, documentType);
+                }
+            });
+        });
+    </script>
+</body>
+</html>

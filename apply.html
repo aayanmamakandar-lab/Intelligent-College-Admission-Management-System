@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Application - Intelligent College Admission System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('image/bg2.jpg');
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-step {
+            display: none;
+        }
+        .form-step.active {
+            display: block;
+        }
+        .step-indicator {
+            transition: all 0.3s ease;
+        }
+        .step-indicator.active {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+        .step-indicator.completed {
+            background: #10b981;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-white mb-2">Application Form</h1>
+            <p class="text-xl text-gray-200">Fill in your academic details and preferences</p>
+        </div>
+
+        <!-- Progress Indicator -->
+        <div class="flex justify-center mb-8">
+            <div class="flex space-x-4">
+                <div class="step-indicator active w-10 h-10 rounded-full flex items-center justify-center font-bold" id="step-1-indicator">1</div>
+                <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold bg-gray-300" id="step-2-indicator">2</div>
+                <div class="step-indicator w-10 h-10 rounded-full flex items-center justify-center font-bold bg-gray-300" id="step-3-indicator">3</div>
+            </div>
+        </div>
+
+        <!-- Form Container -->
+        <div class="form-container max-w-4xl mx-auto p-8">
+            <form id="applicationForm" method="POST" action="/apply">
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="step-1">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                        <i class="fas fa-user mr-2"></i>Personal Information
+                    </h2>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                            <input type="text" name="first_name" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your first name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                            <input type="text" name="last_name" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your last name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" name="email" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your email">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" name="phone" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your phone number">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Date of Birth</label>
+                            <input type="date" name="dob" required 
+                                   class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                            <select name="gender" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end mt-8">
+                        <button type="button" onclick="nextStep()" 
+                                class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300">
+                            Next Step <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 2: Academic Information -->
+                <div class="form-step" id="step-2">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                        <i class="fas fa-graduation-cap mr-2"></i>Academic Information
+                    </h2>
+
+                    <div class="space-y-6">
+                        <!-- 12th Grade Details -->
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">12th Grade Details</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Board/University</label>
+                                    <input type="text" name="board_12th" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                           placeholder="e.g., CBSE, State Board">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Year of Passing</label>
+                                    <input type="number" name="year_12th" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                           placeholder="2025" min="2020" max="2025">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Percentage (%)</label>
+                                    <input type="number" name="percentage_12th" required step="0.01" min="0" max="100"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                           placeholder="85.50">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 10th Grade Details -->
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">10th Grade Details</h3>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Board/University</label>
+                                    <input type="text" name="board_10th" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                           placeholder="e.g., CBSE, State Board">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Year of Passing</label>
+                                    <input type="number" name="year_10th" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                           placeholder="2022" min="2018" max="2022">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Percentage (%)</label>
+                                    <input type="number" name="percentage_10th" required step="0.01" min="0" max="100"
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                           placeholder="88.75">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Entrance Exam Details -->
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Entrance Examination</h3>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Exam Name</label>
+                                    <select name="entrance_exam" required 
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                                        <option value="">Select Exam</option>
+                                        <option value="JEE Main">JEE Main</option>
+                                        <option value="JEE Advanced">JEE Advanced</option>
+                                        <option value="State CET">State CET</option>
+                                        <option value="BITSAT">BITSAT</option>
+                                        <option value="VITEEE">VITEEE</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Score/Rank</label>
+                                    <input type="number" name="entrance_score" required 
+                                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                           placeholder="Enter your score or rank">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mt-8">
+                        <button type="button" onclick="prevStep()" 
+                                class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <button type="button" onclick="nextStep()" 
+                                class="bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 transition duration-300">
+                            Next Step <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Step 3: Stream Selection -->
+                <div class="form-step" id="step-3">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">
+                        <i class="fas fa-cogs mr-2"></i>Engineering Stream Selection
+                    </h2>
+
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Engineering Stream</label>
+                            <select name="engineering_stream" required 
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                    onchange="updateStreamInfo()">
+                                <option value="">Select Engineering Stream</option>
+                                <option value="Artificial Intelligence and Machine Learning">Artificial Intelligence and Machine Learning</option>
+                                <option value="Computer Science Engineering">Computer Science Engineering</option>
+                                <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                <option value="Electrical Engineering">Electrical Engineering</option>
+                                <option value="Civil Engineering">Civil Engineering</option>
+                                <option value="Electronics & Communication">Electronics & Communication</option>
+                                <option value="Chemical Engineering">Chemical Engineering</option>
+                                <option value="Aerospace Engineering">Aerospace Engineering</option>
+                                <option value="Biotechnology">Biotechnology</option>
+                            </select>
+                        </div>
+
+                        <!-- Stream Information -->
+                        <div id="stream-info" class="bg-blue-50 p-6 rounded-lg" style="display: none;">
+                            <h4 class="font-semibold text-gray-800 mb-3">Stream Information</h4>
+                            <div id="stream-details"></div>
+                        </div>
+
+                        <!-- Additional Preferences -->
+                        <div class="bg-gray-50 p-6 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Additional Preferences</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Why are you interested in this stream?</label>
+                                    <textarea name="interest_reason" rows="4" 
+                                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                              placeholder="Briefly explain your interest in this engineering stream..."></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Career Goals</label>
+                                    <textarea name="career_goals" rows="3" 
+                                              class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                              placeholder="What are your career aspirations after completing this engineering program?"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between mt-8">
+                        <button type="button" onclick="prevStep()" 
+                                class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition duration-300">
+                            <i class="fas fa-arrow-left mr-2"></i> Previous
+                        </button>
+                        <a href="/upload_documents (1).html" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">
+                            <i class="fas fa-paper-plane mr-2"></i>Submit Documents
+                      </a>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+        const totalSteps = 3;
+
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                // Validate current step
+                if (validateStep(currentStep)) {
+                    document.getElementById(`step-${currentStep}`).classList.remove('active');
+                    document.getElementById(`step-${currentStep}-indicator`).classList.remove('active');
+                    document.getElementById(`step-${currentStep}-indicator`).classList.add('completed');
+                    
+                    currentStep++;
+                    
+                    document.getElementById(`step-${currentStep}`).classList.add('active');
+                    document.getElementById(`step-${currentStep}-indicator`).classList.add('active');
+                }
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+                document.getElementById(`step-${currentStep}-indicator`).classList.remove('active');
+                
+                currentStep--;
+                
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                document.getElementById(`step-${currentStep}-indicator`).classList.add('active');
+                document.getElementById(`step-${currentStep}-indicator`).classList.remove('completed');
+            }
+        }
+
+        function validateStep(step) {
+            const stepElement = document.getElementById(`step-${step}`);
+            const requiredFields = stepElement.querySelectorAll('[required]');
+            
+            for (let field of requiredFields) {
+                if (!field.value.trim()) {
+                    field.focus();
+                    alert('Please fill in all required fields before proceeding.');
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function updateStreamInfo() {
+            const streamSelect = document.querySelector('select[name="engineering_stream"]');
+            const streamInfo = document.getElementById('stream-info');
+            const streamDetails = document.getElementById('stream-details');
+            
+            if (streamSelect.value) {
+                streamInfo.style.display = 'block';
+                
+                const streamData = {
+                    'Computer Science Engineering': {
+                        description: 'Focus on software development, algorithms, and computer systems.',
+                        career: 'Software Developer, Data Scientist, System Analyst',
+                        demand: 'High'
+                    },
+                    'Mechanical Engineering': {
+                        description: 'Study of machines, thermodynamics, and manufacturing processes.',
+                        career: 'Mechanical Engineer, Design Engineer, Production Manager',
+                        demand: 'High'
+                    },
+                    'Electrical Engineering': {
+                        description: 'Electrical systems, power generation, and circuit design.',
+                        career: 'Electrical Engineer, Control Systems Engineer',
+                        demand: 'Medium'
+                    },
+                    'Civil Engineering': {
+                        description: 'Infrastructure design, construction, and project management.',
+                        career: 'Civil Engineer, Structural Engineer, Project Manager',
+                        demand: 'Medium'
+                    },
+                    'Electronics & Communication': {
+                        description: 'Electronic circuits, communication systems, and signal processing.',
+                        career: 'Electronics Engineer, Communication Engineer',
+                        demand: 'Medium'
+                    },
+                    'Chemical Engineering': {
+                        description: 'Chemical processes, plant design, and materials science.',
+                        career: 'Chemical Engineer, Process Engineer',
+                        demand: 'Medium'
+                    },
+                    'Aerospace Engineering': {
+                        description: 'Aircraft and spacecraft design, aerodynamics, and propulsion.',
+                        career: 'Aerospace Engineer, Design Engineer',
+                        demand: 'Low'
+                    },
+                    'Biotechnology': {
+                        description: 'Biological systems, genetic engineering, and pharmaceutical processes.',
+                        career: 'Biotechnologist, Research Scientist',
+                        demand: 'Low'
+                    }
+                };
+                
+                const data = streamData[streamSelect.value];
+                streamDetails.innerHTML = `
+                    <p class="text-gray-700 mb-2"><strong>Description:</strong> ${data.description}</p>
+                    <p class="text-gray-700 mb-2"><strong>Career Opportunities:</strong> ${data.career}</p>
+                    <p class="text-gray-700"><strong>Industry Demand:</strong> 
+                        <span class="px-2 py-1 rounded text-sm ${data.demand === 'High' ? 'bg-green-100 text-green-800' : data.demand === 'Medium' ? 'bg-yellow-100 text-yellow-800' : 'bg-red-100 text-red-800'}">${data.demand}</span>
+                    </p>
+                `;
+            } else {
+                streamInfo.style.display = 'none';
+            }
+        }
+
+        // Form submission
+        document.getElementById('applicationForm').addEventListener('submit', function(e) {
+            if (!validateStep(3)) {
+                e.preventDefault();
+                return false;
+            }
+            
+            // Show loading
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Processing...';
+            submitBtn.disabled = true;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Intelligent College Admission System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('image/bg1.jpg');
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-16">
+        <div class="max-w-md mx-auto">
+            <!-- Logo/Header -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full mb-4">
+                    <i class="fas fa-graduation-cap text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-2">Intelligent College Admission Management System</h1>
+                <p class="text-gray-200">Streamline your college Admission Process.</p>
+            </div>
+
+            <!-- Login Form -->
+            <div class="login-container p-8">
+                
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    <i class="mr-2"></i> Welcome back! Please login to continue
+                </div>
+
+                <!-- NEW: Role Selector for Admin Function -->
+                <div class="mb-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user-shield mr-2"></i>Select Login Type
+                    </label>
+                    <div class="flex space-x-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="role" value="user" checked class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                            <span class="ml-2 text-sm text-gray-700">User (Student/Applicant)</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="role" value="admin" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
+                            <span class="ml-2 text-sm text-gray-700">Admin</span>
+                        </label>
+                    </div>
+                </div>
+
+                <form id="loginForm" method="POST" action="/analytics.html"> <!-- Default action; will be updated by JS for admin -->
+                    <div class="space-y-6"> 
+                    </div>
+                
+      
+                        <!-- Email -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-envelope mr-2"></i>Email Address or username
+                            </label>
+                            <input type="email" name="email" required 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your email address">
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-lock mr-2"></i>Password
+                            </label>
+                            <input type="password" name="password" required 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your password">
+                        </div>
+
+                        <!-- Remember Me -->
+                        <div class="flex items-center">
+                            <input type="checkbox" id="remember" name="remember" 
+                                   class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="remember" class="ml-2 block text-sm text-gray-700">
+                                Remember me
+                            </label>
+                        </div>
+
+                        <!-- Login Button -->
+                        <div class="mt-6 text-center">
+                            <a href="/dashboard.html" 
+                                    class="w-full inline-flex justify-center items-center bg-blue-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 font-semibold">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Login
+                             </a>   
+                        </div>
+
+                <!-- Divider -->
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">New to our platform?</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Register Link -->
+                <div class="mt-6 text-center">
+                    <a href="/register (1).html" 
+                       class="w-full inline-flex justify-center items-center bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 transition duration-300 font-semibold">
+                        <i class="fas fa-user-plus mr-2"></i>Create New Account
+                    </a>
+                </div>
+
+
+            <!-- Footer -->
+            <div class="text-center mt-8">
+                <p class="text-gray-300 text-sm">
+                    <i class="fas fa-shield-alt mr-1"></i>
+                    Your information is secure and encrypted
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.form-input');
+            const form = document.getElementById('loginForm');
+            const roleRadios = document.querySelectorAll('input[name="role"]');
+            
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('transform', 'scale-105');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('transform', 'scale-105');
+                });
+            });
+
+            // NEW: Update form action based on role selection
+            roleRadios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    if (this.value === 'admin') {
+                        form.action = '/admin-login'; // Change to admin endpoint
+                    } else {
+                        form.action = '/login'; // Default user endpoint
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

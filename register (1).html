@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Intelligent College Admission System</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: url('image/bg1.jpg');
+            background-size: cover;
+            min-height: 100vh;
+        }
+        .register-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .form-input {
+            transition: all 0.3s ease;
+        }
+        .form-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        .password-strength {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-2xl mx-auto">
+            <!-- Logo/Header -->
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full mb-4">
+                    <i class="fas fa-graduation-cap text-3xl text-white"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-2">Intelligent College Admission Management System</h1>
+                <p class="text-gray-200">Streamline your college admission process.</p>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="register-container p-8">
+
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    <i class="mr-2"></i>Create your account to get started
+                </div>
+                
+
+                <form method="POST" action="/register" id="registerForm">
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- First Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-user mr-2"></i>First Name
+                            </label>
+                            <input type="text" name="first_name" required 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your first name">
+                        </div>
+
+                        <!-- Last Name -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-user mr-2"></i>Last Name
+                            </label>
+                            <input type="text" name="last_name" required 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your last name">
+                        </div>
+
+                        <!-- Email -->
+                        <div class="md:col-span-2">
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-envelope mr-2"></i>Email Address
+                            </label>
+                            <input type="email" name="email" required 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your email address">
+                        </div>
+
+                        <!-- Phone -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-phone mr-2"></i>Phone Number
+                            </label>
+                            <input type="tel" name="phone" required 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Enter your phone number">
+                        </div>
+
+                        <!-- Date of Birth -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-calendar-alt mr-2"></i>Date of Birth
+                            </label>
+                            <input type="date" name="dob" required 
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-lock mr-2"></i>Password
+                            </label>
+                            <input type="password" name="password" required id="password"
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Create a strong password">
+                            <div class="mt-2">
+                                <div class="flex items-center justify-between text-xs text-gray-500">
+                                    <span>Password Strength:</span>
+                                    <span id="password-strength-text">Weak</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                    <div class="password-strength h-2 rounded-full" id="password-strength-bar" style="width: 0%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Confirm Password -->
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                <i class="fas fa-lock mr-2"></i>Confirm Password
+                            </label>
+                            <input type="password" name="confirm_password" required id="confirm_password"
+                                   class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                                   placeholder="Confirm your password">
+                            <div class="mt-2 hidden" id="password-match">
+                                <span class="text-green-600 text-xs">
+                                    <i class="fas fa-check mr-1"></i>Passwords match
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Terms and Conditions -->
+                    <div class="mt-6">
+                        <div class="flex items-start">
+                            <input type="checkbox" id="terms" name="terms" required 
+                                   class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded mt-1">
+                            <label for="terms" class="ml-2 block text-sm text-gray-700">
+                                I agree to the <a href="#" class="text-indigo-600 hover:text-indigo-500">Terms and Conditions</a> 
+                                and <a href="#" class="text-indigo-600 hover:text-indigo-500">Privacy Policy</a>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Subscription -->
+                    <div class="mt-4">
+                        <div class="flex items-center">
+                            <input type="checkbox" id="newsletter" name="newsletter" 
+                                   class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
+                            <label for="newsletter" class="ml-2 block text-sm text-gray-700">
+                                Subscribe to newsletter for admission updates
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Register Button -->
+                    <div class="mt-8">
+                        <button type="submit" 
+                                class="w-full bg-gradient-to-r from-green-600 to-green-700 text-white py-3 rounded-lg hover:from-green-700 hover:to-green-800 transition duration-300 font-semibold">
+                            <i class="fas fa-user-plus mr-2"></i>Create Account
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Divider -->
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-300"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">Already have an account?</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Login Link -->
+                <div class="mt-6 text-center">
+                    <a href="/login" 
+                       class="w-full inline-flex justify-center items-center bg-indigo-600 text-white py-3 rounded-lg hover:bg-indigo-700 transition duration-300 font-semibold">
+                        <i class="fas fa-sign-in-alt mr-2"></i>Login to Existing Account
+                    </a>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-8">
+                <p class="text-gray-300 text-sm">
+                    <i class="fas fa-shield-alt mr-1"></i>
+                    Your information is secure and encrypted
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let score = 0;
+            let feedback = [];
+
+            // Length check
+            if (password.length >= 8) score += 1;
+            else feedback.push('At least 8 characters');
+
+            // Uppercase check
+            if (/[A-Z]/.test(password)) score += 1;
+            else feedback.push('One uppercase letter');
+
+            // Lowercase check
+            if (/[a-z]/.test(password)) score += 1;
+            else feedback.push('One lowercase letter');
+
+            // Number check
+            if (/[0-9]/.test(password)) score += 1;
+            else feedback.push('One number');
+
+            // Special character check
+            if (/[^A-Za-z0-9]/.test(password)) score += 1;
+            else feedback.push('One special character');
+
+            return { score, feedback };
+        }
+
+        // Update password strength indicator
+        function updatePasswordStrength() {
+            const password = document.getElementById('password').value;
+            const strengthBar = document.getElementById('password-strength-bar');
+            const strengthText = document.getElementById('password-strength-text');
+            
+            const { score, feedback } = checkPasswordStrength(password);
+            const percentage = (score / 5) * 100;
+            
+            strengthBar.style.width = percentage + '%';
+            
+            if (percentage < 40) {
+                strengthBar.className = 'password-strength h-2 rounded-full bg-red-500';
+                strengthText.textContent = 'Weak';
+                strengthText.className = 'text-red-600';
+            } else if (percentage < 70) {
+                strengthBar.className = 'password-strength h-2 rounded-full bg-yellow-500';
+                strengthText.textContent = 'Medium';
+                strengthText.className = 'text-yellow-600';
+            } else {
+                strengthBar.className = 'password-strength h-2 rounded-full bg-green-500';
+                strengthText.textContent = 'Strong';
+                strengthText.className = 'text-green-600';
+            }
+        }
+
+        // Check password match
+        function checkPasswordMatch() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            const matchDiv = document.getElementById('password-match');
+            
+            if (password && confirmPassword) {
+                if (password === confirmPassword) {
+                    matchDiv.classList.remove('hidden');
+                    matchDiv.innerHTML = '<span class="text-green-600 text-xs"><i class="fas fa-check mr-1"></i>Passwords match</span>';
+                } else {
+                    matchDiv.classList.remove('hidden');
+                    matchDiv.innerHTML = '<span class="text-red-600 text-xs"><i class="fas fa-times mr-1"></i>Passwords do not match</span>';
+                }
+            } else {
+                matchDiv.classList.add('hidden');
+            }
+        }
+
+        // Event listeners
+        document.getElementById('password').addEventListener('input', updatePasswordStrength);
+        document.getElementById('confirm_password').addEventListener('input', checkPasswordMatch);
+
+        // Form validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                alert('Passwords do not match!');
+                return false;
+            }
+            
+            const { score } = checkPasswordStrength(password);
+            if (score < 3) {
+                e.preventDefault();
+                alert('Please choose a stronger password. It should be at least 8 characters long and contain uppercase, lowercase, numbers, and special characters.');
+                return false;
+            }
+        });
+
+        // Add interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputs = document.querySelectorAll('.form-input');
+            
+            inputs.forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.parentElement.classList.add('transform', 'scale-105');
+                });
+                
+                input.addEventListener('blur', function() {
+                    this.parentElement.classList.remove('transform', 'scale-105');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
